@@ -1,0 +1,24 @@
+{
+    "name": "yousemble/geocoder",
+    "description": "",
+    "authors": [
+        {
+            "name": "Christiaan Lombard",
+            "email": "christiaan.lombard@yousemble.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.*",
+        "willdurand/geocoder": "3.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Yousemble\\Geocoder\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
