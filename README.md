@@ -5,9 +5,13 @@
 
 ###Composer:
 
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/christiaan-lombard/geocoder"
-    }
-],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/christiaan-lombard/geocoder"
+        }
+    ],
+
+    "require": {
+        "yousemble/geocoder": 1.0",
+    },
