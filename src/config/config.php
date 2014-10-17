@@ -6,6 +6,8 @@ return array(
     // The first one to return a result will be used.
     'providers' => array(
         'Geocoder\Provider\GeoPluginProvider'  => null,
+        'Geocoder\Provider\FreeGeoIpProvider'  => null,
+        'Geocoder\Provider\HostIpProvider'  => null,
     ),
     'adapter'  => 'Geocoder\HttpAdapter\CurlHttpAdapter'
 );

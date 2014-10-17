@@ -1,5 +1,8 @@
 <?php namespace Yousemble\Geocoder;
 
+
+use Geocoder\Geocoder;
+use Geocoder\Provider\ChainProvider;
 use Illuminate\Support\ServiceProvider;
 
 class GeocoderServiceProvider extends ServiceProvider {
@@ -9,7 +12,7 @@ class GeocoderServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Bootstrap the application events.
@@ -55,12 +58,14 @@ class GeocoderServiceProvider extends ServiceProvider {
         return new ChainProvider($providers);
     });
 
-    $this->app['geocoder'] = $this->app->share(function($app) {
+    $this->app->singleton('geocoder', function($app) {
         $geocoder = new Geocoder;
         $geocoder->registerProvider($app['geocoder.chain']);
 
         return $geocoder;
     });
+
+    $this->app->bind('\Geocoder\GeocoderInterface', 'geocoder');
 	}
 
   /**
