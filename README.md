@@ -8,10 +8,10 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/christiaan-lombard/geocoder"
+            "url": "https://github.com/yousemble/laravel-geocoder"
         }
     ],
 
     "require": {
-        "yousemble/geocoder": 1.0",
+        "yousemble/geocoder": "dev-master",
     },

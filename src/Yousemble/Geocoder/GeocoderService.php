@@ -1,10 +1,10 @@
-<?php
-
-namespace Yousemble\Geocoder;
+<?php namespace Yousemble\Geocoder;
 
 use Geocoder\GeocoderInterface as GeocoderContract;
 use Illuminate\Contracts\Cache\Repository as CacheContract;
 use Yousemble\Geocoder\Contracts\GeocoderService as GeocoderServiceContract;
+
+use Geocoder\Result\Geocoded;
 
 
 class GeocoderService implements GeocoderServiceContract
@@ -29,11 +29,21 @@ class GeocoderService implements GeocoderServiceContract
    */
   public function geocode($value){
 
-    //TODO - check cache first
+    $cache_key = $this->getValueCacheKey($value);
 
+
+    //check cache first
+    if($this->cache->has($cache_key)){
+      $result = new Geocoded;
+      $result->fromArray($this->cache->get($cache_key));
+      return  $result;
+    }
+
+    //get the result from our geocoder
     $result = $this->geocoder->geocode($value);
 
-    //TODO - store result in cache
+    //store result in cache
+    $this->cache->put($cache_key, $result->toArray(), $this->cacheMinutes);
 
     return $result;
 
@@ -56,7 +66,7 @@ class GeocoderService implements GeocoderServiceContract
   }
 
   protected function getValueCacheKey($value){
-    return 'geocode-value-' . $value;
+    return str_replace([':','.'],'_','_geocode_' . $value);
   }
 
   protected function getCacheMinutes(){

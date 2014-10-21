@@ -1,4 +1,4 @@
-<?php namespace Yousemble\Geocoder\Providers;
+<?php namespace Yousemble\Geocoder;
 
 
 use Geocoder\Geocoder;
@@ -32,6 +32,7 @@ class GeocoderServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+
     $this->app->singleton('geocoder.adapter', function($app) {
         $adapter = $app['config']->get('geocoder::adapter');
 
@@ -67,9 +68,9 @@ class GeocoderServiceProvider extends ServiceProvider {
     });
 
     $this->app->singleton('geocoder.service', function($app) {
-        $geocoderService = new GeocoderService($app['geocoder.geocoder'], $app['cache'], $app['config']->get('geocoder::cache_minutes'));
+        $geocoderService = new GeocoderService($app['geocoder.geocoder'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
 
-        return $geocoder;
+        return $geocoderService;
     });
 
     $this->app->bind('Yousemble\Geocoder\Contracts\GeocoderService', 'geocoder.service');
