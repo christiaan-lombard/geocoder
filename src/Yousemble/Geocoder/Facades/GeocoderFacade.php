@@ -1,6 +1,6 @@
 <?php
 
-namespace Yousemble\Geocoder;
+namespace Yousemble\Geocoder\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -13,6 +13,6 @@ class GeocoderFacade extends Facade
     */
     protected static function getFacadeAccessor()
     {
-        return 'geocoder';
+        return 'geocoder.service';
     }
 }
