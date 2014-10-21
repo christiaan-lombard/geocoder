@@ -13,6 +13,6 @@ class GeocoderFacade extends Facade
     */
     protected static function getFacadeAccessor()
     {
-        return 'geocoder.service';
+        return 'Yousemble\Geocoder\Contracts\GeocoderService';
     }
 }

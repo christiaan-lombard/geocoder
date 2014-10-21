@@ -1,6 +1,6 @@
 {
     "name": "yousemble/geocoder",
-    "description": "",
+    "description": "Laravel 5 wrapper for Geocoder-PHP (http://geocoder-php.org/Geocoder/) with added caching",
     "authors": [
         {
             "name": "Christiaan Lombard",

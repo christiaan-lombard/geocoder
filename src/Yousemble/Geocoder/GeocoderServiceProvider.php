@@ -60,20 +60,16 @@ class GeocoderServiceProvider extends ServiceProvider {
         return new ChainProvider($providers);
     });
 
-    $this->app->singleton('geocoder.geocoder', function($app) {
+    $this->app->bindShared('Geocoder\GeocoderInterface', function($app) {
         $geocoder = new Geocoder;
         $geocoder->registerProvider($app['geocoder.chain']);
-
         return $geocoder;
     });
 
-    $this->app->singleton('geocoder.service', function($app) {
-        $geocoderService = new GeocoderService($app['geocoder.geocoder'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
-
+    $this->app->bindShared('Yousemble\Geocoder\Contracts\GeocoderService', function($app){
+        $geocoderService = new GeocoderService($app['Geocoder\GeocoderInterface'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
         return $geocoderService;
     });
-
-    $this->app->bind('Yousemble\Geocoder\Contracts\GeocoderService', 'geocoder.service');
 	}
 
   /**
@@ -83,7 +79,7 @@ class GeocoderServiceProvider extends ServiceProvider {
    */
   public function provides()
   {
-      return array('geocoder.service', 'geocoder.geocoder', 'geocoder.adapter', 'geocoder.chain');
+      return array('Yousemble\Geocoder\Contracts\GeocoderService', 'Geocoder\GeocoderInterface', 'geocoder.adapter', 'geocoder.chain');
   }
 
 }
