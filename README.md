@@ -44,13 +44,19 @@ The GeocoderFacade grabs the singleton *Yousemble\Geocoder\GeocoderService*.
 
 ###Method Injection
 
-To inject a GeocoderService instance, use *Yousemble\Geocoder\Contracts\GeocoderService*
+To inject a GeocoderService instance, use the *Yousemble\Geocoder\Contracts\GeocoderService* interface,
+bound to *Yousemble\Geocoder\GeocoderService*
 
-  use Yousemble\Geocoder\Contracts\GeocoderService as GeocoderServiceContract;
+    <?php
 
-  //...
+    //...
 
-  public function index(GeocoderServiceContract $geocoder)
-  {
-    $result = $geocoder->geocodeRemoteAddr();
-  }
+    use Yousemble\Geocoder\Contracts\GeocoderService as GeocoderServiceContract;
+
+    //...
+
+    public function __construct(GeocoderServiceContract $geocoder)
+    {
+      $result = $geocoder->geocodeRemoteAddr();
+      //...
+    }
