@@ -67,7 +67,7 @@ class GeocoderServiceProvider extends ServiceProvider {
     });
 
     $this->app->bindShared('Yousemble\Geocoder\Contracts\GeocoderService', function($app){
-        $geocoderService = new GeocoderService($app['Geocoder\GeocoderInterface'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
+        $geocoderService = new Geocoder($app['Geocoder\GeocoderInterface'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
         return $geocoderService;
     });
 	}
