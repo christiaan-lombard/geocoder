@@ -22,7 +22,7 @@ class GeocoderServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('yousemble/geocoder');
+		$this->package('yousemble/geocoder', 'ysgeocoder');
 	}
 
 	/**
@@ -33,6 +33,26 @@ class GeocoderServiceProvider extends ServiceProvider {
 	public function register()
 	{
 
+    $configured_providers = $this->app->config->get('ysgeocoder::geocoder.providers', ['Geocoder\Provider\GeoPluginProvider']);
+    $configured_cache_minutes = $this->app->config->get('ysgeocoder::geocoder.cache_minutes', 10080);
+
+    $this->app->singleton('Ivory\HttpAdapter\HttpAdapterInterface')
+
+
+    $this->app->singleton('Geocoder\Provider\Provider', function($app) use ($configured_providers){
+
+      $providers = [];
+
+      foreach ($configured_providers as $provider_class => $data) {
+
+      }
+
+    });
+
+    $this->app->singleton('Geocoder\Geocoder', '');
+
+
+  /*
     $this->app->singleton('geocoder.adapter', function($app) {
         $adapter = $app['config']->get('geocoder::adapter');
 
@@ -69,8 +89,35 @@ class GeocoderServiceProvider extends ServiceProvider {
     $this->app->bindShared('Yousemble\Geocoder\Contracts\GeocoderService', function($app){
         $geocoderService = new Geocoder($app['Geocoder\GeocoderInterface'], $app['cache.store'], $app['config']->get('geocoder::cache_minutes'));
         return $geocoderService;
-    });
+    });*/
 	}
+
+  protected function mapConfigToProvider($provider, array $config = null)
+  {
+      $dependencies = [];
+      $class = new ReflectionClass($provider);
+      foreach ($class->getConstructor()->getParameters() as $parameter)
+      {
+          $name = $parameter->getName();
+          if (array_key_exists($name, $config))
+          {
+              $dependencies[] = $config[$name];
+          }
+          elseif($name === 'adapter')
+          {
+            $dependencies[] = $this->app->make($parameter->getClass());
+          }
+          elseif ($parameter->isDefaultValueAvailable())
+          {
+            $dependencies[] = $parameter->getDefaultValue();
+          }
+          else
+          {
+              throw new InvalidArgumentException("Unable to map config to provider: {$name}");
+          }
+      }
+      return $class->newInstanceArgs($dependencies);
+  }
 
   /**
    * Get the services provided by the provider.
@@ -79,7 +126,7 @@ class GeocoderServiceProvider extends ServiceProvider {
    */
   public function provides()
   {
-      return array('Yousemble\Geocoder\Contracts\GeocoderService', 'Geocoder\GeocoderInterface', 'geocoder.adapter', 'geocoder.chain');
+      return array();
   }
 
 }

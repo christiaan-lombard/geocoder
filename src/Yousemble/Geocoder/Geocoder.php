@@ -4,7 +4,7 @@ use Geocoder\GeocoderInterface as GeocoderContract;
 use Illuminate\Contracts\Cache\Repository as CacheContract;
 use Yousemble\Geocoder\Contracts\GeocoderService as GeocoderServiceContract;
 
-use Geocoder\Result\Geocoded;
+use Geocoder\Model\AddressFactory;
 
 
 class GeocoderService implements GeocoderServiceContract

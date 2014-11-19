@@ -9,7 +9,6 @@ return array(
         'Geocoder\Provider\FreeGeoIpProvider'  => null,
         'Geocoder\Provider\HostIpProvider'  => null,
     ),
-    'adapter'  => 'Geocoder\HttpAdapter\CurlHttpAdapter',
 
     'cache_minutes' => 500
 );
